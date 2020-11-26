@@ -5,7 +5,7 @@
   <title>email form</title>
 </head>
 <body>
-  <form action="/email_post" method="post">
+  <form action="/email/form" method="post">
     이메일 : <input type="text" name="email"><br/>
     <input type="submit">
   </form>
@@ -17,7 +17,7 @@
     document.querySelector('.ajaxsend').addEventListener('click', function() {
       // document.forms[0]은 body의 form이고, elements[0]는 첫번째 input타입, value는 입력한 값
       var inputdata = document.forms[0].elements[0].value;
-      sendAjax('http://localhost:3000/ajax_send_email', inputdata)
+      sendAjax('http://localhost:3000/email/ajax', inputdata)
     })
 
     function sendAjax(url, data) {
