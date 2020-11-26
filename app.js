@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var mysql = require('mysql');
 var main = require('./router/main');
+var email = require('./router/email');
 
 var connection = mysql.createConnection({
   host : 'localhost',
@@ -32,29 +33,12 @@ app.use(express.json())
 //app.use(cors())
 app.use(express.urlencoded({extended:true}))
 app.set('view engine', 'ejs')
-//app.set('views', 'views')
+// app.set('views', 'views')
 
 app.use('/main', main)
+app.use('/email', email)
 
-app.post('/email_post', function(req, res) {
-  //res.send(req.body.email)
-  res.render('email', {email: req.body.email})
-})
-
-app.post('/ajax_send_email', function(req, res) {
-  var email = req.body.email;
-  var responseData = {};
-
-  var query = connection.query(`select name from user where email= '${email}'`, function(err, rows) {
-    if(err) throw err;
-    if(rows[0]) {
-      responseData.result = "ok";
-      responseData.name = rows[0].name;
-    }else {
-      responseData.result = "none";
-      responseData.name = "";
-    }
-    res.json(responseData);
-  })
-
+app.get('/', function(req, res) {
+  console.log('test')
+  res.sendFile(__dirname + '/public/main.html')
 })
