@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var mysql = require('mysql');
+var main = require('./router/main');
 
 var connection = mysql.createConnection({
   host : 'localhost',
@@ -25,15 +26,15 @@ app.listen(3000, function(){
 });
 
 app.use(express.static('public'))
+// express에서 JSON Ruquest Body 파싱
+// body-parser는 4.16 이전 버전에서 사용
 app.use(express.json())
 //app.use(cors())
 app.use(express.urlencoded({extended:true}))
 app.set('view engine', 'ejs')
 //app.set('views', 'views')
 
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + "/public/main.html");
-})
+app.use('/main', main)
 
 app.post('/email_post', function(req, res) {
   //res.send(req.body.email)
