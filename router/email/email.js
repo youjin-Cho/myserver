@@ -13,6 +13,8 @@ var connection = mysql.createConnection({
   database : 'nodedb'
 });
 
+connection.connect()
+
 // ROUTER
 router.post('/form', function(req, res) {
   console.log(req.body.email)
